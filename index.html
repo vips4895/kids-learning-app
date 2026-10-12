@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Learning Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f8ff; text-align: center; padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
+        h1 { color: #ff6f61; }
+        .btn { background-color: #4caf50; color: white; border: none; padding: 12px 20px; font-size: 16px; margin: 10px; border-radius: 8px; cursor: pointer; width: 80%; }
+        .btn:hover { background-color: #45a049; }
+        #result { font-weight: bold; margin-top: 15px; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🎈 Kids Quiz App 🎈</h1>
+        <p id="question">Loading Question...</p>
+        <div id="options"></div>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "Gujarati me 5 + 3 kitne hote hain?", options: ["6", "8", "10"], answer: "8" },
+            { q: "Hathi (Elephant) ka rang kaisa hota hai?", options: ["Kala/Ghre", "Lal", "Pila"], answer: "Kala/Ghre" },
+            { q: "Suraj kis disha se ugta hai?", options: ["Purv (East)", "Pashchim (West)", "Uttar (North)"], answer: "Purv (East)" }
+        ];
+
+        let currentQ = 0;
+
+        function loadQuestion() {
+            let q = questions[currentQ];
+            document.getElementById("question").innerText = q.q;
+            let optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            document.getElementById("result").innerText = "";
+
+            q.options.forEach(opt => {
+                let btn = document.createElement("button");
+                btn.className = "btn";
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(opt);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected) {
+            if (selected === questions[currentQ].answer) {
+                document.getElementById("result").innerText = "🎉 Sahi Jawab! Shabaash!";
+                document.getElementById("result").style.color = "green";
+            } else {
+                document.getElementById("result").innerText = "❌ Galat Jawab! Phir se koshish karo.";
+                document.getElementById("result").style.color = "red";
+            }
+            setTimeout(() => {
+                currentQ = (currentQ + 1) % questions.length;
+                loadQuestion();
+            }, 1500);
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
